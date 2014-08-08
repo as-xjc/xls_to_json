@@ -171,15 +171,13 @@ if __name__ == "__main__":
 	except KeyError:
 		xls_data["data"] = {}
 
-	if read_data_struct(xls_data, sheet):
-		print("read struct ok")
-	else:
+	if not read_data_struct(xls_data, sheet):
 		print("read struct fail")
 		sys.exit(1)
 
 	if read_xls_data(xls_data, sheet):
-		print("read ok")
-		save_json(json.dumps(xls_data["data"], indent=4, sort_keys=True), to_json_path)
+		json_data = json.dumps(xls_data["data"], indent=4, sort_keys=True, ensure_ascii=False)
+		save_json(json_data, to_json_path)
 	else:
 		print("read xls data fail")
 		sys.exit(1)
