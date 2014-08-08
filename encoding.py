@@ -77,6 +77,9 @@ def strip_value(value):
 	return value 
 
 def to_array(value):
+	if not isinstance(value, str):
+		value = str(value)
+
 	array_data = "[" + value + "]"
 	array_data = strip_value(array_data)
 	try:
@@ -85,6 +88,9 @@ def to_array(value):
 		return [], False
 
 def to_map(value):
+	if not isinstance(value, str):
+		value = str(value)
+
 	map_data = "{" + value + "}"
 	map_data = strip_value(map_data)
 	try:
