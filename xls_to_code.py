@@ -129,7 +129,7 @@ def read_xls_data(xls_data, sheet):
 
 def usage():
 	print('usage:')
-	print('	python xls_to_json.py xls_path sheet_name to_json_path language')
+	print('	python xls_to_json.py xls_path sheet_name to_code_path language')
 
 if __name__ == '__main__':
 	if len(sys.argv) != 5:

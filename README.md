@@ -1,13 +1,13 @@
-xls_to_json
+xls_to_langeuage_code
 ===========
-  a tool for xls to json
-  
+  a tool for xls to language code
+
 ## depend:
   * python 3+
   * xlrd
 
 ## useage:
-  * python xls_to_json.py xls_path sheet_name to_json_path
+  * python xls_to_code.py xls_path sheet_name to_code_path language
 
 ## xls format:
   see example
