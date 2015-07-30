@@ -4,7 +4,7 @@ import sys
 import xlrd
 import re
 import encoding
-import language
+import language as lang
 
 def read_xls_head(xls_data, sheet):
 	head = {}
@@ -141,13 +141,13 @@ if __name__ == '__main__':
 	try:
 		xls = xlrd.open_workbook(xls_path)
 	except FileNotFoundError:
-		print('can't open xls:%s'%(xls_path))
+		print('can\'t open xls:%s'%(xls_path))
 		sys.exit(1)
 
 	try:
 		sheet = xls.sheet_by_name(sheet_name)
 	except xlrd.biffh.XLRDError:
-		print('can't get sheet:%s'%(sheet_name))
+		print('can\'t get sheet:%s'%(sheet_name))
 		sys.exit(1)
 
 	xls_data = {}
