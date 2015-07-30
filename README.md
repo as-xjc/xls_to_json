@@ -1,4 +1,4 @@
-xls_to_langeuage_code
+xls_to_language_code
 ===========
   a tool for xls to language code
 
