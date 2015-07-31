@@ -7,7 +7,7 @@ xls_to_language_code
   * xlrd
 
 ## useage:
-  * python xls_to_code.py xls_path sheet_name to_code_path language which_parse
+  * python xls_to_code.py xls_path sheet_name to_code_path language struct_row
 
   example:  
     python3 xls_to_code.py example/test.xls test_map ./server.json json server

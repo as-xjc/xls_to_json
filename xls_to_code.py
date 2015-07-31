@@ -33,7 +33,7 @@ def parse_struct(value):
 support_data_type = ('int', 'float', 'string', 'map', 'array', 'bool')
 def read_data_struct(xls_data, sheet):
 	try:
-		which = xls_data['head']['which_parse']
+		which = xls_data['head']['struct_row']
 		struct_line = int(xls_data['head'][which])
 		struct_line -= 1
 	except KeyError:
@@ -130,14 +130,14 @@ def read_xls_data(xls_data, sheet):
 
 def usage():
 	print('usage:')
-	print('	python xls_to_json.py xls_path sheet_name to_code_path language which_parse')
+	print('	python xls_to_json.py xls_path sheet_name to_code_path language struct_row')
 
 if __name__ == '__main__':
 	if len(sys.argv) != 6:
 		usage()
 		sys.exit(1)
 
-	xls_path, sheet_name, to_json_path, language, which_parse = sys.argv[1:6]
+	xls_path, sheet_name, to_json_path, language, struct_row = sys.argv[1:6]
 
 	try:
 		xls = xlrd.open_workbook(xls_path)
@@ -158,7 +158,7 @@ if __name__ == '__main__':
 
 	xls_data['head']['language'] = language
 	xls_data['head']['xls_path'] = xls_path
-	xls_data['head']['which_parse'] = which_parse
+	xls_data['head']['struct_row'] = struct_row
 	try:
 		key = xls_data['head']['data_type']
 		if key == 'array':
