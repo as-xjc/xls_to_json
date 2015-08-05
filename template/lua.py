@@ -3,7 +3,7 @@
 import json
 import io
 
-tab = ' '
+tab = '  '
 
 def _insert(stream, index, value):
 	stream.write(tab*index)
