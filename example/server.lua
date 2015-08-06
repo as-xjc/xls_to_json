@@ -21,18 +21,18 @@ local __data__ = {
           },
       },
       ["name"] = "hey",
-      ["is_man"] = false,
       ["id"] = 1,
+      ["is_man"] = false,
   },
   [2] = {
       ["game_list"] = {
           [1] = 12313,
           [2] = "lol",
-          [3] = 231,
+          [3] = 23.1,
       },
       ["name"] = "hahaha",
-      ["is_man"] = true,
       ["id"] = 2,
+      ["is_man"] = true,
   },
 }
 

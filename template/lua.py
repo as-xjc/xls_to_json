@@ -27,6 +27,9 @@ def _encoderValue(stream, lua_data):
 
 	elif isinstance(lua_data, int):
 		stream.write(str(lua_data))
+		
+	elif isinstance(lua_data, float):
+		stream.write(str(lua_data))
 
 	else:
 		stream.write('nil')
