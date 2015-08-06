@@ -2,8 +2,12 @@
 
 import json
 import io
+import re
 
 tab = '  '
+
+custom_area_start = u'-- ========== custom your code area start ==========\n'
+custom_area_end = u'-- ========== custom your code area end ==========\n'
 
 def _insert(stream, index, value):
 	stream.write(tab*index)
@@ -72,29 +76,63 @@ def _encoderDict(stream, index, lua_data):
 			_encoderValue(stream, v)
 			stream.write(',\n')
 
-def __encoder(lua_data):
+def _inserHead(stream, write_data):
+	stream.write('--[[\n')
+	stream.write('xls path: %s'%write_data['head']['xls_path'])
+	stream.write('\n]]--\n\n')
+
+def _encoderLua(write_data, custom_code):
 	stream = io.StringIO()
-	stream.write('return \n')
-	stream.write('{\n')
+
+	_inserHead(stream, write_data)
+
+	lua_data = write_data['data']
+	stream.write('local hander = {}\n\n')
+	stream.write('local __data__ = {\n')
 	if isinstance(lua_data, dict):
 		_encoderDict(stream, 0, lua_data)
 
 	elif isinstance(lua_data, list):
 		_encoderDict(stream, 0, lua_data)
 
-	stream.write('}\n')
+	stream.write('}\n\n')
 
+	stream.write(
+'''function hander.getData()
+	return __data__
+end\n\n''')
+
+	stream.write(custom_area_start)
+	if len(custom_code):
+		stream.write(custom_code)
+	stream.write(custom_area_end)
+
+	stream.write('\n\nreturn hander')
 	text = stream.getvalue()
 	stream.close()
 	return text
 
-def write(file_path, write_data):
-	with open(file_path, 'w', encoding = 'utf8') as f:
-		f.write('--[[\n')
-		f.write('xls path: %s'%write_data['head']['xls_path'])
-		f.write('\n]]--\n\n')
+def _getCustomCode(text):
+	if len(text) < 1:
+		return ''
 
-		text = __encoder(write_data['data'])
+	engine = re.compile(u'%s(.*?)%s'%(custom_area_start, custom_area_end), re.DOTALL)
+	result = engine.findall(text)
+	if len(result):
+		return result[0]
+	else:
+		return ''
+
+def write(file_path, write_data):
+	try:
+		with open(file_path, 'r+', encoding = 'utf8') as f:
+			oldText = f.read()
+	except:
+		oldText = ''
+
+	with open(file_path, 'w', encoding = 'utf8') as f:
+		custom_code = _getCustomCode(oldText)
+		text = _encoderLua(write_data, custom_code)
 		f.write(text)
 		return True
 
