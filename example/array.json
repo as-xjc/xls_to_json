@@ -1,9 +1,18 @@
-{
-    "1": {
+[
+    {
         "game_list": [
             "wow",
             "lol",
-            1
+            1,
+            {
+                "1": [
+                    1,
+                    2,
+                    3,
+                    1000,
+                    5
+                ]
+            }
         ],
         "id": 1,
         "is_man": true,
@@ -13,18 +22,18 @@
             "learn": "pc"
         }
     },
-    "2": {
+    {
         "game_list": [
             12313,
             "lol",
-            231
+            23.1
         ],
         "id": 2,
         "is_man": false,
         "name": "hahaha",
         "property": {
-            "boy": 10,
-            "buy": "pc"
+            "buy": "pc",
+            "你好": 10
         }
     }
-}
+]
