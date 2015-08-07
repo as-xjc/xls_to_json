@@ -36,27 +36,21 @@ def _encoderValue(stream, lua_data):
 
 def _encoderList(stream, index, lua_data):
 	index = index + 1
-	i = 1
 	for v in lua_data:
-		_insert(stream, index, '[')
-		_encoderValue(stream, i)
-		_insert(stream, 0, '] = ')
-
 		if isinstance(v, dict):
-			_insert(stream, 0, '{\n')
+			_insert(stream, index, '{\n')
 			_encoderDict(stream, index+1, v)
 			_insert(stream, index, '},\n')
 
 		elif isinstance(v, list):
-			_insert(stream, 0, '{\n')
+			_insert(stream, index, '{\n')
 			_encoderList(stream, index+1, v)
 			_insert(stream, index, '},\n')
 
 		else:
+			_insert(stream, index, '')
 			_encoderValue(stream, v)
 			stream.write(',\n')
-
-		i = i + 1
 
 def _encoderDict(stream, index, lua_data):
 	index = index + 1
@@ -96,7 +90,7 @@ def _encoderLua(write_data, custom_code):
 		_encoderDict(stream, 0, lua_data)
 
 	elif isinstance(lua_data, list):
-		_encoderDict(stream, 0, lua_data)
+		_encoderList(stream, 0, lua_data)
 
 	stream.write('}\n\n')
 
