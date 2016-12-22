@@ -122,3 +122,7 @@ def to_value(value, value_type):
 
 	else:
 		return None, False
+
+support_data_type = ('int', 'float', 'string', 'map', 'array', 'bool')
+def is_supported(data_type):
+	return data_type in support_data_type

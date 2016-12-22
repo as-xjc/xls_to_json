@@ -27,7 +27,7 @@ def _encoderValue(stream, lua_data):
 
 	elif isinstance(lua_data, int):
 		stream.write(str(lua_data))
-		
+
 	elif isinstance(lua_data, float):
 		stream.write(str(lua_data))
 
@@ -73,17 +73,17 @@ def _encoderDict(stream, index, lua_data):
 			_encoderValue(stream, v)
 			stream.write(',\n')
 
-def _inserHead(stream, write_data):
+def _inserHead(stream, proto):
 	stream.write('--[[\n')
-	stream.write('xls path: %s'%write_data['head']['xls_path'])
+	stream.write('xls path: %s'%proto.getArg('xls_path'))
 	stream.write('\n]]--\n\n')
 
-def _encoderLua(write_data, custom_code):
+def _encoderLua(proto, custom_code):
 	stream = io.StringIO()
 
-	_inserHead(stream, write_data)
+	_inserHead(stream, proto)
 
-	lua_data = write_data['data']
+	lua_data = proto.getData() 
 	stream.write('local hander = {}\n\n')
 	stream.write('local __data__ = {\n')
 	if isinstance(lua_data, dict):
@@ -120,7 +120,7 @@ def _getCustomCode(text):
 	else:
 		return ''
 
-def write(file_path, write_data):
+def write(file_path, proto):
 	try:
 		with open(file_path, 'r+', encoding = 'utf8') as f:
 			oldText = f.read()
@@ -129,7 +129,7 @@ def write(file_path, write_data):
 
 	with open(file_path, 'w', encoding = 'utf8') as f:
 		custom_code = _getCustomCode(oldText)
-		text = _encoderLua(write_data, custom_code)
+		text = _encoderLua(proto, custom_code)
 		f.write(text)
 		return True
 
